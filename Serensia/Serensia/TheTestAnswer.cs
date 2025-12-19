@@ -2,6 +2,9 @@ namespace Serensia;
 
 public class TheTestAnswer : IAmTheTest
 {
+    /// <summary>
+    /// Returns the N most similar lowercase alphanumeric terms from choices, filtered and sorted by similarity.
+    /// </summary>
     public IEnumerable<string> GetSuggestions(string term, IEnumerable<string> choices, int numberOfSuggestions)
     {
         Guard.IsLowerAlphaNumeric(term, nameof(term));
