@@ -13,7 +13,7 @@ public class TheTestAnswerTests
     [TestCase("gros", new[] { "gros", "gras", "graisse", "aggressif", "go", "ros", "gro" }, 2, new[] { "gros", "gras" },
         Description = "Subject test")]
     [TestCase("gros", new[] {"brow", "gros", "gris", "abcd"}, 4, new[] {"gros", "gris", "brow", "abcd"},
-        Description = "Score order")]
+        Description = "Letter replacement order")]
     [TestCase("gros", new[] {"123456", "1234", "1234567"}, 3, new[] {"1234", "123456", "1234567"},
         Description = "Size order")]
     [TestCase("gros", new[] {"azbc", "abcd", "azac"}, 3, new[] {"abcd", "azac", "azbc"},

@@ -8,10 +8,28 @@ public static class SimilarityCalculator
             .Select(candidate => CalculateTermSimilarity(searchTerm, candidate));
 
     private static TermSimilarity CalculateTermSimilarity(string searchTerm, string candidate)
-        => new(candidate, CalculateLetterToReplace(searchTerm, candidate), CalculateDistance(searchTerm, candidate));
+        => new(candidate, CalculateLettersToReplace(searchTerm, candidate), CalculateDistance(searchTerm, candidate));
 
-    private static int CalculateLetterToReplace(string searchTerm, string candidate)
-        => 0;
+    private static int CalculateLettersToReplace(string searchTerm, string candidate)
+    {
+        if (candidate.Length == searchTerm.Length)
+            return CountDifferences(searchTerm, candidate, 0);
+    
+        var minDifferences = int.MaxValue;
+    
+        for (int offset = 0; offset <= candidate.Length - searchTerm.Length; offset++)
+        {
+            var differences = CountDifferences(searchTerm, candidate, offset);
+            minDifferences = Math.Min(minDifferences, differences);
+        }
+    
+        return minDifferences;
+    }
+
+    private static int CountDifferences(string searchTerm, string candidate, int offset)
+        => searchTerm
+            .Select((c, i) => candidate.Length <= offset + i || c != candidate[offset + i] ? 1 : 0)
+            .Sum();
 
     private static int CalculateDistance(string searchTerm, string candidate)
         => candidate.Length - searchTerm.Length;
