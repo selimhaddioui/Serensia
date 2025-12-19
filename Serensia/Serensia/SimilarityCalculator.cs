@@ -14,15 +14,15 @@ public static class SimilarityCalculator
     {
         if (candidate.Length == searchTerm.Length)
             return CountDifferences(searchTerm, candidate, 0);
-    
+
         var minDifferences = int.MaxValue;
-    
+
         for (int offset = 0; offset <= candidate.Length - searchTerm.Length; offset++)
         {
             var differences = CountDifferences(searchTerm, candidate, offset);
             minDifferences = Math.Min(minDifferences, differences);
         }
-    
+
         return minDifferences;
     }
 
