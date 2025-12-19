@@ -14,12 +14,14 @@ public class TheTestAnswerTests
         Description = "Subject test")]
     [TestCase("gros", new[] {"brow", "gros", "gris", "abcd"}, 4, new[] {"gros", "gris", "brow", "abcd"},
         Description = "Score order")]
-    [TestCase("gros", new[] {"12", "1234", "1234567"}, 3, new[] {"1234", "12", "1234567"},
+    [TestCase("gros", new[] {"123456", "1234", "1234567"}, 3, new[] {"1234", "123456", "1234567"},
         Description = "Size order")]
     [TestCase("gros", new[] {"azbc", "abcd", "azac"}, 3, new[] {"abcd", "azac", "azbc"},
         Description = "Alphabet order")]
     [TestCase("gros", new[] {"grise", "gris", "gros", "grabaa", "grabbb", "zz"}, 5, new[] {"gros", "gris", "grise", "grabaa", "grabbb"},
         Description = "Global order")]
+    [TestCase("gros", new[] {"aaa", "gro", "r", "ros"}, 3, new string[0],
+        Description = "Smaller term")]
     public void GivenValidArguments_GetSuggestions_ShouldReturnsExpectedResults(string term, string[] choices, int numberOfSuggestions, string[] expected)
     {
         // Act
