@@ -8,6 +8,13 @@ public class TheTestAnswer : IAmTheTest
         Guard.AreAlphaNumeric(choices, nameof(choices));
         Guard.IsInRange(numberOfSuggestions, choices.Count(), nameof(numberOfSuggestions));
         
-        throw new NotImplementedException();
+        var termSimilarities = SimilarityCalculator.CalculateSimilarities(term, choices);
+        var orderedSimilarities = termSimilarities
+            .OrderBy(termSimilarity => termSimilarity.LettersToReplace)
+            .ThenBy(termSimilarity => termSimilarity.Distance)
+            .ThenBy(termSimilarity => termSimilarity.Term)
+            .Take(numberOfSuggestions);
+        
+        return orderedSimilarities.Select(termSimilarity => termSimilarity.Term);
     }
 }

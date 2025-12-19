@@ -26,7 +26,7 @@ public class TheTestAnswerTests
         var suggestions = _sut.GetSuggestions(term, choices, numberOfSuggestions);
 
         // Assert
-        Assert.That(suggestions, Is.EqualTo(new[] { "gros", "gras" }));
+        Assert.That(suggestions, Is.EqualTo(expected));
     }
 
     [TestCase("Gros", new[] { "some", "thing" }, 1,

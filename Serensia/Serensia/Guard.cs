@@ -8,8 +8,8 @@ public static class Guard
     {
         IsNotNullOrWhiteSpace(value, paramName);
         
-        if(!value.All(char.IsLetterOrDigit) || !value.All(char.IsLower))
-            throw new ArgumentException("Value is not alphanumeric", paramName);
+        if(!value.All(c => char.IsDigit(c) || char.IsLower(c)))
+            throw new ArgumentException("Value is not lowercase alphanumeric", paramName);
     }
 
     public static void AreAlphaNumeric(IEnumerable<string> choices, string paramName)
@@ -18,8 +18,14 @@ public static class Guard
 
         foreach (var choice in choices)
         {
-            IsLowerAlphaNumeric(choice, paramName);
+            IsLowerAlphaNumeric(choice, $"{paramName}[{choice}]");
         }
+    }
+
+    public static void IsInRange(int numberOfSuggestions, int numberOfChoices, string paramName)
+    {
+        ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(numberOfSuggestions, MinRange, paramName);
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(numberOfSuggestions, numberOfChoices, paramName);
     }
 
     private static void IsNotNullOrWhiteSpace(string value, string paramName)
@@ -31,11 +37,5 @@ public static class Guard
             throw new ArgumentNullException("Values is null.", paramName);
         if(!values.Any())
             throw new ArgumentException("Values is empty", paramName);
-    }
-
-    public static void IsInRange(int numberOfSuggestions, int numberOfChoices, string paramName)
-    {
-        ArgumentOutOfRangeException.ThrowIfGreaterThan(numberOfSuggestions, numberOfChoices, paramName);
-        ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(numberOfSuggestions, MinRange, paramName);
     }
 }
