@@ -41,16 +41,20 @@ public class TheTestAnswerTests
         Description = "Symbol in choices")]
     [TestCase("gros", new string[0], 3,
         Description = "Empty choices")]
-    [TestCase("gros", new[] { "some", "thing" }, -8,
-        Description = "Negative number of suggestions")]
-    [TestCase("gros", new[] { "some", "thing" }, 0,
-        Description = "Zero suggestions requested")]
-    [TestCase("gros", new[] { "some", "thing" }, 3,
-        Description = "More suggestions than available choices")]
     public void GivenInvalidArguments_GetSuggestions_ThrowArgumentException(string term, string[] choices, int numberOfSuggestions)
     {
         // Act & Assert
         Assert.That(() => _sut.GetSuggestions(term, choices, numberOfSuggestions), Throws.ArgumentException);
+    }
+
+    [TestCase(-8, Description = "Negative number of suggestions")]
+    [TestCase(0, Description = "Zero suggestions requested")]
+    [TestCase(3, Description = "More suggestions than available choices")]
+    public void GivenInvalidNumberOfSuggestion_GetSuggestions_ThrowArgumentOutOfRangeException(int numberOfSuggestions)
+    {
+        // Act & Assert
+        Assert.That(() => _sut.GetSuggestions("gros", new[] { "some", "thing" }, numberOfSuggestions),
+            Throws.TypeOf<ArgumentOutOfRangeException>());
     }
     
     [Test]
@@ -61,7 +65,7 @@ public class TheTestAnswerTests
         const int numberOfSuggestions = 2;
 
         // Act & Assert
-        Assert.That(() => _sut.GetSuggestions(null, choices, numberOfSuggestions), Throws.ArgumentException);
+        Assert.That(() => _sut.GetSuggestions(null, choices, numberOfSuggestions), Throws.ArgumentNullException);
     }
     
     [Test]
@@ -72,6 +76,6 @@ public class TheTestAnswerTests
         const int numberOfSuggestions = 2;
 
         // Act & Assert
-        Assert.That(() => _sut.GetSuggestions(term, null, numberOfSuggestions), Throws.ArgumentException);
+        Assert.That(() => _sut.GetSuggestions(term, null, numberOfSuggestions), Throws.ArgumentNullException);
     }
 }
